@@ -10,4 +10,5 @@ You can use it for whatever you want. Create automated scripts that blink the li
 
 # Installation
 > An extended installation guide will be posted soon, as HueTerm is still in early development.
+
 To install HueTerm, type the following code in your terminal: `bash <(curl -fsSL "https://raw.githubusercontent.com/DeadNetOfficial/hueterm/master/install.sh")`.
