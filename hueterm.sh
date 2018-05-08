@@ -14,7 +14,7 @@ lights_url="http://$ip_address/api/$api_key/lights"
 
 # Functions
 function display_help {
-  echo -e "Usage:"
+  echo -e "\e[1mUSAGE\e[0m"
   echo -e "\t -v|--version  Display the current version."
   echo -e "\t -h|--help     Show this screen."
   echo -e "\t -q|--quiet    Suppress the output of messages.\n"
@@ -23,15 +23,15 @@ function display_help {
   echo -e "\t -c|--command  Specify the light command to use to perform on the selected light ID."
   echo -e "\t -l|--list     List available lights and light IDs.\n"
 
-  echo -e "Examples:"
+  echo -e "\e[1mEXAMPLES\e[0m"
   echo -e "\t Turning a light on or off:"
-  echo -e "\t $0 -i 6 -c on:true"
-  echo -e "\t $0 -i 6 -c on:false\n"
+  echo -e "\t \e[96m$0\e[0m -i 6 -c on:true"
+  echo -e "\t \e[96m$0\e[0m -i 6 -c on:false\n"
   echo -e "\t You can also provide multiple commands and multiple light IDs at a time:"
-  echo -e "\t $0 -i 3,6 -c on:false,hue:30000,bri:120"
-  echo -e "\t $0 -i 3,4,6 -c effect:colorloop\n"
+  echo -e "\t \e[96m$0\e[0m -i 3,6 -c on:false,hue:30000,bri:120"
+  echo -e "\t \e[96m$0\e[0m -i 3,4,6 -c effect:colorloop\n"
   echo -e "\t Suppressing messages for automated scripts:"
-  echo -e "\t $0 -q -i 6 -c alert:select"
+  echo -e "\t \e[96m$0\e[0m -q -i 6 -c alert:select"
 }
 
 function send_request {
@@ -39,14 +39,14 @@ function send_request {
 }
 
 function list_available_lights {
-  echo "Available lights:"
+  echo -e "\e[92m==/ [ Available lights ] \\==\e[0m"
   curl -s $lights_url | jq .
 }
 
 while getopts ":vhqli:c:" opt; do
   case $opt in
     v)
-      echo "HueTerm v$version -- Created by DeadNet." && exit 0
+      echo -e "\e[1mHueTerm \e[92mv$version\e[0m // Created by \e[96mDeadNet.\e[0m" && exit 0
       ;;
 
     h)
@@ -71,7 +71,7 @@ while getopts ":vhqli:c:" opt; do
 
     \?)
       echo "Invalid option: '-$OPTARG'" >&2
-      echo "Try typing $0 -h"
+      echo -e "Type \e[96m$0 -h\e[0m to view the help screen."
       exit 1
       ;;
 
@@ -92,7 +92,7 @@ if [[ "$command" != "" ]] && [[ "$light_id" != "" ]]; then
       cmd_value=${split[1]}
 
       if [[ $quiet = false ]]; then
-        echo "Executing command $cmd on light $id."
+        echo -e "Executing command \e[93m$cmd\e[0m on light \e[93m$id\e[0m."
       fi
 
       if [[ $cmd_value =~ [0-9] ]] || [[ $cmd_value = false ]] || [[ $cmd_value = true ]]; then
