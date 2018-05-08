@@ -21,7 +21,17 @@ function display_help {
   echo -e "\t -i|--id       Specifies the light ID to use to execute the light command."
   echo -e "\t               To see the current available lights, type -l or --list."
   echo -e "\t -c|--command  Specify the light command to use to perform on the selected light ID."
-  echo -e "\t -l|--list     List available lights and light IDs."
+  echo -e "\t -l|--list     List available lights and light IDs.\n"
+
+  echo -e "Examples:"
+  echo -e "\t Turning a light on or off:"
+  echo -e "\t $0 -i 6 -c on:true"
+  echo -e "\t $0 -i 6 -c on:false\n"
+  echo -e "\t You can also provide multiple commands and multiple light IDs at a time:"
+  echo -e "\t $0 -i 3,6 -c on:false,hue:30000,bri:120"
+  echo -e "\t $0 -i 3,4,6 -c effect:colorloop\n"
+  echo -e "\t Suppressing messages for automated scripts:"
+  echo -e "\t $0 -q -i 6 -c alert:select"
 }
 
 function send_request {
