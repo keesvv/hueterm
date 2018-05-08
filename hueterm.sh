@@ -73,21 +73,24 @@ while getopts ":vhqli:c:" opt; do
 done
 
 if [[ "$command" != "" ]] && [[ "$light_id" != "" ]]; then
-  IFS=',' read -ra commands <<< "$command"
-  for i in "${commands[@]}"; do
-    IFS=':' read -ra split <<< "$i"
-    cmd_id=${split[0]}
-    cmd_value=${split[1]}
+  IFS=',' read -ra lights_ids <<< "$light_id"
+  for id in "${lights_ids[@]}"; do
+    IFS=',' read -ra commands <<< "$command"
+    for cmd in "${commands[@]}"; do
+      IFS=':' read -ra split <<< "$cmd"
+      cmd_id=${split[0]}
+      cmd_value=${split[1]}
 
-    if [[ $quiet = false ]]; then
-      echo "Executing command $i on light $light_id."
-    fi
+      if [[ $quiet = false ]]; then
+        echo "Executing command $cmd on light $id."
+      fi
 
-    if [[ $cmd_value =~ [0-9] ]] || [[ $cmd_value = false ]] || [[ $cmd_value = true ]]; then
-      send_request lights/$light_id/state "{\"$cmd_id\":$cmd_value}"
-    else
-      send_request lights/$light_id/state "{\"$cmd_id\":\"$cmd_value\"}"
-    fi
+      if [[ $cmd_value =~ [0-9] ]] || [[ $cmd_value = false ]] || [[ $cmd_value = true ]]; then
+        send_request lights/$id/state "{\"$cmd_id\":$cmd_value}"
+      else
+        send_request lights/$id/state "{\"$cmd_id\":\"$cmd_value\"}"
+      fi
+    done
   done
 else
   if [[ $quiet = false ]]; then
