@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cd /usr/share/hueterm
 version="1.0.0-b"
 
 # User settings
@@ -65,7 +66,7 @@ while getopts ":vhuqli:c:g:" opt; do
       ;;
 
     u)
-      bash <(curl -fsSL "https://raw.githubusercontent.com/DeadNetOfficial/hueterm/master/install.sh")
+      bash <(curl -fsSL "https://raw.githubusercontent.com/DeadNetOfficial/hueterm/master/install.sh") && exit 0
       ;;
 
     q)
