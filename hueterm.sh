@@ -70,13 +70,14 @@ while getopts ":vhqli:c:" opt; do
       ;;
 
     \?)
-      echo "Invalid option: '-$OPTARG'" >&2
-      echo -e "Type \e[96m$0 -h\e[0m to view the help screen."
+      echo -e "Invalid option: '-$OPTARG'\n" >&2
+      display_help
       exit 1
       ;;
 
     :)
-      echo "Option '-$OPTARG' requires an argument." >&2
+      echo -e "Option '-$OPTARG' requires an argument.\n" >&2
+      display_help
       exit 1
       ;;
   esac
@@ -104,7 +105,8 @@ if [[ "$command" != "" ]] && [[ "$light_id" != "" ]]; then
   done
 else
   if [[ $quiet = false ]]; then
-    echo "There was no light ID or light command given."
+    echo -e "There was no light ID or light command given.\n"
+    display_help
   fi
   exit 1
 fi
