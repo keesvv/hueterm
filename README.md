@@ -1,4 +1,6 @@
 # HueTerm
+[![CodeFactor](https://www.codefactor.io/repository/github/deadnetofficial/hueterm/badge)](https://www.codefactor.io/repository/github/deadnetofficial/hueterm)
+
 Control your Philips Hue lights with Bash commands and scripts.
 > Looking for a Windows equivalent? Have a look at another project of mine: [SilentRoomController](https://github.com/keesvv/silentroomcontroller).
 
