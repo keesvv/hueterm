@@ -21,6 +21,7 @@ function display_help {
   echo -e "\t -i|--id       Specifies the light ID to use to execute the light command."
   echo -e "\t               To see the current available lights, type -l or --list."
   echo -e "\t -c|--command  Specify the light command to use to perform on the selected light ID."
+  echo -e "\t -g|--get-prop Gets a property value from the current light ID."
   echo -e "\t -l|--list     List available lights and light IDs.\n"
 
   echo -e "\e[1mEXAMPLES\e[0m"
@@ -43,7 +44,16 @@ function list_available_lights {
   curl -s $lights_url | jq .
 }
 
-while getopts ":vhqli:c:" opt; do
+function get_property_value {
+  if [[ "$light_id" != "" ]]; then
+    curl -s $lights_url/$light_id | jq -r .state.$1
+  else
+    echo -e "You need to supply a light ID using the '-i' option.\n"
+    display_help
+  fi
+}
+
+while getopts ":vhqli:c:g:" opt; do
   case $opt in
     v)
       echo -e "\e[1mHueTerm \e[92mv$version\e[0m // Created by \e[96mDeadNet.\e[0m" && exit 0
@@ -63,6 +73,10 @@ while getopts ":vhqli:c:" opt; do
 
     c)
       command="$OPTARG"
+      ;;
+
+    g)
+      get_property_value "$OPTARG" && exit 0
       ;;
 
     l)
