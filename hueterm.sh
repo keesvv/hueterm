@@ -121,14 +121,18 @@ if [[ "$command" != "" ]] && [[ "$light_id" != "" ]]; then
       cmd_id=${split[0]}
       cmd_value=${split[1]}
 
+      is_reachable=$(curl -s $lights_url/$id | jq -r .state.reachable)
       if [[ $quiet = false ]]; then
-        echo -e "Executing command \e[93m$cmd\e[0m on light \e[93m$id\e[0m."
-      fi
-
-      if [[ $cmd_value =~ [0-9] ]] || [[ $cmd_value = false ]] || [[ $cmd_value = true ]]; then
-        send_request lights/$id/state "{\"$cmd_id\":$cmd_value}"
-      else
-        send_request lights/$id/state "{\"$cmd_id\":\"$cmd_value\"}"
+        if [[ $is_reachable = true ]]; then
+          echo -e "Executing command \e[93m$cmd\e[0m on light \e[93m$id\e[0m."
+          if [[ $cmd_value =~ [0-9] ]] || [[ $cmd_value = false ]] || [[ $cmd_value = true ]]; then
+            send_request lights/$id/state "{\"$cmd_id\":$cmd_value}"
+          else
+            send_request lights/$id/state "{\"$cmd_id\":\"$cmd_value\"}"
+          fi
+        else
+          echo -e "Light \e[91m$id\e[0m is not reachable on the network."
+        fi
       fi
     done
   done
