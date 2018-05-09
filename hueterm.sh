@@ -66,7 +66,7 @@ while getopts ":vhuqli:c:g:" opt; do
       ;;
 
     u)
-      bash <(curl -fsSL "https://raw.githubusercontent.com/DeadNetOfficial/hueterm/master/install.sh") && exit 0
+      ./install.sh && exit 0
       ;;
 
     q)
