@@ -18,6 +18,7 @@ function display_help {
   echo -e "\e[1mUSAGE\e[0m"
   echo -e "\t -v|--version  Display the current version."
   echo -e "\t -h|--help     Show this screen."
+  echo -e "\t -s|--settings Edit the configuration for HueTerm (required before use)."
   echo -e "\t -u|--update   Update HueTerm to the latest available version."
   echo -e "\t -q|--quiet    Suppress the output of messages.\n"
   echo -e "\t -i|--id       Specifies the light ID to use to execute the light command."
@@ -59,7 +60,7 @@ function get_property_value {
   fi
 }
 
-while getopts ":vhuqli:c:g:" opt; do
+while getopts ":vhsuqli:c:g:" opt; do
   case $opt in
     v)
       echo -e "\e[1mHueTerm \e[92mv$version\e[0m // Created by \e[96mDeadNet.\e[0m" && exit 0
@@ -67,6 +68,10 @@ while getopts ":vhuqli:c:g:" opt; do
 
     h)
       display_help && exit 0
+      ;;
+
+    s)
+      sudo -p "Password: " nano -AED /etc/hueterm/hueterm.json
       ;;
 
     u)
