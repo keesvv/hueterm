@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Installing HueTerm..."
-sudo -p "Password: " echo
+sudo -p "Password: " echo -n
 
 # Install required dependencies
 echo "Installing dependencies..."
