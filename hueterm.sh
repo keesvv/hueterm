@@ -42,12 +42,11 @@ function send_request {
 }
 
 function list_available_lights {
-  echo -e "\e[92m==/ [ Available lights ] \\==\e[0m"
   lights_available=$(curl -s $lights_url | jq .)
-  if [[ "$lights_available" == "" ]]; then
-    echo -e "\e[96mNo lights available. Have you properly configured \e[93m/etc/hueterm/hueterm.json\e[96m?\e[0m"
+  if [[ "$lights_available" == "" ]] || [[ "$lights_available" = *"error"* ]]; then
+    echo "No lights available. Have you properly configured /etc/hueterm/hueterm.json?" | less
   else
-    echo "$lights_available"
+    echo "$lights_available" | less
   fi
 }
 
