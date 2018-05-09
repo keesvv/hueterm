@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+cd ~
+
 echo "Installing HueTerm..."
 sudo -p "Password: " echo -n
 
@@ -13,6 +15,7 @@ if [[ -d "/usr/share/hueterm" ]]; then
 fi
 
 # Clone the repository
+echo "Cloning the latest version of HueTerm..."
 sudo git clone https://github.com/DeadNetOfficial/hueterm.git /usr/share/hueterm
 
 # Give executable permissions to main executable
