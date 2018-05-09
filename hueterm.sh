@@ -3,8 +3,8 @@ cd /usr/share/hueterm
 version="1.0.0-b"
 
 # User settings
-ip_address=$(jq -r .settings.ip_address hueterm.json)
-api_key=$(jq -r .settings.api_key hueterm.json)
+ip_address=$(jq -r .settings.ip_address /etc/hueterm/hueterm.json)
+api_key=$(jq -r .settings.api_key /etc/hueterm/hueterm.json)
 quiet=false
 light_id=
 command=
@@ -43,7 +43,12 @@ function send_request {
 
 function list_available_lights {
   echo -e "\e[92m==/ [ Available lights ] \\==\e[0m"
-  curl -s $lights_url | jq .
+  lights_available=$(curl -s $lights_url | jq .)
+  if [[ "$lights_available" == "" ]]; then
+    echo -e "\e[96mNo lights available. Have you properly configured \e[93m/etc/hueterm/hueterm.json\e[96m?\e[0m"
+  else
+    echo "$lights_available"
+  fi
 }
 
 function get_property_value {

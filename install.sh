@@ -18,6 +18,13 @@ sudo git clone https://github.com/DeadNetOfficial/hueterm.git /usr/share/hueterm
 # Give executable permissions to main executable
 sudo chmod +x /usr/share/hueterm/hueterm.sh
 
+# Move the settings file to the configuration directory
+if [[ ! -d /etc/hueterm ]]; then
+  echo "Creating configuration directory..."
+  sudo mkdir /etc/hueterm
+  sudo mv /usr/share/hueterm/hueterm.json /etc/hueterm
+fi
+
 # Make symbolic links
 if [[ ! -f "/usr/bin/hueterm" ]]; then
   echo "Creating symbolic links..."
